@@ -1,5 +1,5 @@
 -- S-010: 店舗テーブル（store）から、店舗コード（store_cd）が"S14"で始まるものだけ全項目抽出し、10件だけ表示せよ。
 
-select *
-from `a_hundred_knocks_1_1.store`
-where store_cd like 'S14%' limit 10;
+SELECT *
+FROM `a_hundred_knocks_1_1.store`
+WHERE store_cd like 'S14%' limit 10;
