@@ -1,3 +1,20 @@
 -- S-001: レシート明細テーブル（receipt）から全項目の先頭10件を表示し、どのようなデータを保有しているか目視で確認せよ。
+-- config {
+--     type: "view",
+--     description: "test_1",
+-- }
 
-select * from `test-dataform-395505.source.receipt`limit 10;
+-- select * from  limit 10
+
+-- config { 
+--   type: "table",
+--   name: "receipt_list",
+--   description: "レシートリスト"
+-- }
+
+
+
+config { type: "table"}
+
+-- SELECT * FROM ${ref("test-dataform-395505.source.receipt")}
+SELECT * FROM `test-dataform-395505.test_dataform_eu.receipt_eu`
