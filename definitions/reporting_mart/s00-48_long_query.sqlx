@@ -1,0 +1,131 @@
+config {
+        type: "table",
+        database: "test-dataform-395505",
+        schema: "mart",
+        name: "test_table_2"
+        }
+--44問目
+--S-044: 前設問で作成した売上サマリテーブル（sales_summary）は性別の売上を横持ちさせたものであった。このテーブルから性別を縦持ちさせ、年代、性別コード、売上金額の3項目に変換せよ。ただし、性別コードは男性を"00"、女性を"01"、不明を"99"とする。
+
+WITH
+age_cotegorize_table AS (
+  SELECT
+  receipt_tb.customer_id,
+  CASE
+    WHEN gender = "男性" THEN "00"
+    WHEN gender = "女性" THEN "01"
+    ELSE "99" END AS gender,
+  age,
+  amount,
+  CASE
+    WHEN age between 80 AND 89 THEN "80's"
+    WHEN age between 70 AND 79 THEN "70's"
+    WHEN age between 60 AND 69 THEN "60's"
+    WHEN age between 50 AND 59 THEN "50's"
+    WHEN age between 40 AND 49 THEN "40's"
+    WHEN age between 30 AND 39 THEN "30's"
+    WHEN age between 20 AND 29 THEN "20's"
+    WHEN age < 20 THEN "underage" 
+    ELSE "senior's"
+    END AS age_category
+  FROM
+  `test-dataform-395505.test_dataform_eu.receipt_eu` AS receipt_tb
+  LEFT JOIN
+    `test-dataform-395505.test_dataform_eu.customer_eu` AS customer_tb
+  ON customer_tb.customer_id = receipt_tb.customer_id
+  WHERE gender IS NOT NULL
+)
+
+SELECT
+gender,
+age_category,
+SUM(amount) AS amount
+FROM
+age_cotegorize_table
+GROUP BY
+  gender,
+  age_category
+  ORDER BY gender
+
+
+
+
+-- WITH
+-- age_cotegorize_table AS (
+--   SELECT
+--   receipt_tb.customer_id,
+--   CASE
+--     WHEN gender = "男性" THEN 0
+--     WHEN gender = "女性" THEN 1
+--     ELSE 9 END AS gender,
+--   age,
+--   amount,
+--   CASE
+--     WHEN age between 80 AND 89 THEN "80's"
+--     WHEN age between 70 AND 79 THEN "70's"
+--     WHEN age between 60 AND 69 THEN "60's"
+--     WHEN age between 50 AND 59 THEN "50's"
+--     WHEN age between 40 AND 49 THEN "40's"
+--     WHEN age between 30 AND 39 THEN "30's"
+--     WHEN age between 20 AND 29 THEN "20's"
+--     WHEN age < 20 THEN "underage" 
+--     ELSE "senior's"
+--     END AS age_category
+--   FROM
+--   `test-dataform-395505.test_dataform_eu.receipt_eu` AS receipt_tb
+--   LEFT JOIN
+--     test-dataform-395505.test_dataform_eu.customer_eu` AS customer_tb
+--   ON customer_tb.customer_id = receipt_tb.customer_id 
+--   WHERE gender IS NOT NULL
+-- ),
+
+-- male_tb AS (
+-- SELECT
+--   age_category,
+--   sum(amount) AS male
+-- FROM 
+-- age_cotegorize_table
+-- WHERE gender = 0
+-- GROUP BY
+--   age_category
+-- ),
+
+-- female_tb AS (
+-- SELECT
+--   age_category,
+--   sum(amount) AS female
+-- FROM 
+-- age_cotegorize_table
+-- WHERE gender = 1
+-- GROUP BY
+--   age_category
+-- ),
+
+-- unreconize_tb AS (
+-- SELECT
+--   age_category,
+--   sum(amount) AS unreconize
+-- FROM 
+-- age_cotegorize_table
+-- WHERE gender = 9
+-- GROUP BY
+--   age_category
+-- )
+
+
+--   SELECT
+--   male_tb.age_category,
+--   male_tb.male,
+--   female_tb.female,
+--   unreconize_tb.unreconize
+--   FROM
+--   male_tb
+--   LEFT JOIN
+--   female_tb
+--   ON
+--   female_tb.age_category = male_tb.age_category
+--   LEFT JOIN
+--   unreconize_tb
+--   ON
+--   unreconize_tb.age_category = male_tb.age_category
+
