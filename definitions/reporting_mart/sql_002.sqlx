@@ -1,6 +1,11 @@
 --S-002: レシート明細のテーブル（receipt）から売上日（sales_ymd）、顧客ID（customer_id）、商品コード（product_cd）、売上金額（amount）の順に列を指定し、10件表示させよ。
 
-config { type: "table"}
+config {
+        type: "table",
+        database: "test-dataform-395505",
+        schema: "mart",
+        name: "test_table"
+        }
 
 select sales_ymd,
         customer_id,
