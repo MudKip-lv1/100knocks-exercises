@@ -3,6 +3,7 @@
 select sales_ymd,
         customer_id,
         product_cd,
-        amount
- from `a_hundred_knocks_1_1.receipt`
- limit 10;
+        amount,
+        CURRENT_TIMESTAMP AS test_workflow
+ from `test-dataform-395505.test_dataform_eu.receipt_eu`
+ limit 10; 
