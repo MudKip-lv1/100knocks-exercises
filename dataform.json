@@ -1,19 +1,8 @@
+
 {
-  "projects": {
-    "project1": {
-      "defaultSchema": "dataform",
-      "assertionSchema": "dataform_assertions",
-      "warehouse": "bigquery",
-      "defaultDatabase": "test-dataform-395505",
-      "defaultLocation": "EU",
-      "datasets": {
-        "test_dataform_eu": {
-          "location": "EU"
-        },
-        "source": {
-          "location": "US"
-        }
-      }
-    }
-  }
+  "defaultSchema": "dataform",
+  "assertionSchema": "dataform_assertions",
+  "warehouse": "bigquery",
+  "defaultDatabase": "test-dataform-395505",
+  "defaultLocation": "US"
 }
