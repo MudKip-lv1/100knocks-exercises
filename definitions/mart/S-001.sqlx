@@ -14,7 +14,12 @@
 
 
 
-config { type: "table"}
+config {
+        type: "table",
+        database: "test-dataform-395505",
+        schema: "mart",
+        name: "s001"
+        }
 
 -- SELECT * FROM ${ref("test-dataform-395505.source.receipt")}
 SELECT
