@@ -2,16 +2,16 @@
 
 -- 顧客ID（customer_id）が"CS018205000001"
 config {
-        type: "table", 
+        type: "table",
         database: "test-dataform-395505",
         schema: "mart",
         name: "s004"
         }
+
 SELECT sales_ymd,
        customer_id,
        product_cd,
        amount,
 FROM `a_hundred_knocks_1_1.receipt`
 WHERE 
-
 customer_id = 'CS018205000001'
