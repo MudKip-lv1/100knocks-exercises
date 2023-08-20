@@ -19,5 +19,5 @@ config { type: "table"}
 -- SELECT * FROM ${ref("test-dataform-395505.source.receipt")}
 SELECT
     *,
-    CURRENT_TIMESTAMP AS test_workflow
- FROM `test-dataform-395505.test_dataform_eu.receipt_eu`
+    CURRENT_TIMESTAMP AS mart_s002_timestamp
+ FROM `test-dataform-395505.source.receipt`
