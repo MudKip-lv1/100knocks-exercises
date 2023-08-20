@@ -1,8 +1,10 @@
-
 {
   "defaultSchema": "dataform",
   "assertionSchema": "dataform_assertions",
   "warehouse": "bigquery",
   "defaultDatabase": "test-dataform-395505",
-  "defaultLocation": "US"
+  "defaultLocation": "US",
+  "definitions": {
+    "directory": "Query-stock"
+  }
 }
