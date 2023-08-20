@@ -40,7 +40,7 @@ SELECT
 gender,
 age_category,
 SUM(amount) AS amount,
-CURRENT_TIMESTAMP AS mart_s004_timestamp
+CURRENT_TIMESTAMP AS mart_s048_timestamp
 FROM
 age_cotegorize_table
 GROUP BY
