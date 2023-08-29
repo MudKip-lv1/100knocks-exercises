@@ -29,7 +29,8 @@ age_cotegorize_table AS (
     ELSE "senior's"
     END AS age_category
   FROM
-  `test-dataform-395505.source.receipt` AS receipt_tb
+  --from ${ref("store_clean")}
+    from {ref`test-dataform-395505.source.receipt`} AS receipt_tb
   LEFT JOIN
     `test-dataform-395505.source.customer` AS customer_tb
   ON customer_tb.customer_id = receipt_tb.customer_id
