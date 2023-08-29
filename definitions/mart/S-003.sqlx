@@ -1,11 +1,11 @@
 -- S-003: レシート明細のテーブル（receipt）から売上日（sales_ymd）、顧客ID（customer_id）、商品コード（product_cd）、売上金額（amount）の順に列を指定し、10件表示させよ。ただし、sales_ymdはsales_dateに項目名を変更しながら抽出すること。
 
 config {
-        type: "table",
-        database: "test-dataform-395505",
-        schema: "mart",
-        name: "s003"
-        }
+  type: "table", // マテリアライズの種類を指定（viewまたはtable）
+  database: "test-dataform-395505", // プロジェクト名
+  schema: "mart", // データセット名
+  name: "s003", // ビューまたはテーブル名
+}
 
 SELECT sales_ymd AS sales_date,
         customer_id,
