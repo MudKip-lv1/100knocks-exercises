@@ -3,6 +3,7 @@ config {
         database: "test-dataform-395505",
         schema: "mart", 
         name: "s004",
+        dependencies: [ "receipt", "customer" ] 
         }
 --44問目
 --S-044: 前設問で作成した売上サマリテーブル（sales_summary）は性別の売上を横持ちさせたものであった。このテーブルから性別を縦持ちさせ、年代、性別コード、売上金額の3項目に変換せよ。ただし、性別コードは男性を"00"、女性を"01"、不明を"99"とする。

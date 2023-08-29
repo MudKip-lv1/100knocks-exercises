@@ -1,0 +1,44 @@
+--69
+--S-069:レシート明細テーブル（receipt）と商品テーブル（product）を結合し、顧客毎に
+--全商品の売上金額合計と、カテゴリ大区分（category_major_cd）が"07"（瓶詰缶詰）の売上金額合計を計算の上、両者の比率を求めよ。
+--抽出対象はカテゴリ大区分"07"（瓶詰缶詰）の購入実績がある顧客のみとし、
+--結果は10件表示させればよい。
+
+config {
+        type: "table",
+        database: "test-dataform-395505",
+        schema: "mart", 
+        name: "s006",
+        dependencies: [ "receipt","product" ] 
+        }
+
+
+WITH
+customer_amount_sum AS (
+SELECT 
+  customer_id,
+  CAST(SUM(amount) AS numeric) AS sum_amount
+FROM
+  ${ref(`receipt`)}
+GROUP BY customer_id
+),
+
+customer_sum_07 AS (
+SELECT
+  receipt.customer_id,
+  SUM(receipt.amount) AS sum_07_amount
+FROM
+  ${ref(`receipt`)} as receipt
+INNER JOIN ${ref(`product`)} as product
+ON product.product_cd = product.product_cd AND category_major_cd = 7
+GROUP BY receipt.customer_id
+)
+
+SELECT
+  sum_cus.*,
+  cus_07.sum_07_amount,
+  sum_07_amount / sum_amount AS sales_rate_07
+ FROM customer_amount_sum AS sum_cus
+ INNER JOIN customer_sum_07 AS cus_07
+ ON sum_cus.customer_id = cus_07.customer_id
+ LIMIT 10

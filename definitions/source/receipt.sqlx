@@ -1,7 +1,7 @@
 
 config {
   type: "declaration",
-  database: "test-dataform-395505",
-  schema: "source",
+  database: "new-100-knocks",
+  schema: "100knocks",
   name: "receipt",
 }

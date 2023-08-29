@@ -1,6 +1,6 @@
-  config {
+config {
   type: "declaration",
   database: "new-100-knocks",
   schema: "100knocks",
-  name: "customer",
+  name: "store",
 }
