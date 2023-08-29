@@ -1,0 +1,29 @@
+config {
+        type: "table",
+        database: "test-dataform-395505",
+        schema: "warehouse", 
+        name: "customer_purchase_amount",
+        dependencies: [ "receipt", "customer" ] 
+        }
+
+
+WITH customer_amount AS (
+    SELECT 
+        customer_id, SUM(amount) AS sum_amount
+    FROM
+        ${ref(`receipt`)}
+    GROUP BY
+        customer_id
+)
+
+SELECT
+    c.customer_id,
+    COALESCE(a.sum_amount,0) AS purchase_amount
+FROM
+    ${ref(`customer`)} AS c
+LEFT JOIN
+    customer_amount a
+    ON c.customer_id = a.customer_id
+WHERE c.gender_cd = 1
+and c.customer_id not like 'Z%'
+ORDER BY customer_id
