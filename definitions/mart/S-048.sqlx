@@ -1,8 +1,8 @@
 config {
         type: "table",
         database: "test-dataform-395505",
-        schema: "mart",
-        name: "s004"
+        schema: "mart", 
+        name: "s004",
         }
 --44問目
 --S-044: 前設問で作成した売上サマリテーブル（sales_summary）は性別の売上を横持ちさせたものであった。このテーブルから性別を縦持ちさせ、年代、性別コード、売上金額の3項目に変換せよ。ただし、性別コードは男性を"00"、女性を"01"、不明を"99"とする。
@@ -14,7 +14,7 @@ age_cotegorize_table AS (
   CASE
     WHEN gender = "男性" THEN "00"
     WHEN gender = "女性" THEN "01"
-    ELSE "99" END AS gender,
+    ELSE "99" END AS gender, 
   age,
   amount,
   CASE
@@ -28,11 +28,13 @@ age_cotegorize_table AS (
     WHEN age < 20 THEN "underage" 
     ELSE "senior's"
     END AS age_category
-  FROM
-    `test-dataform-395505.source.receipt` AS receipt_tb
+  FROM 
+    ${ref(`receipt`)} AS receipt_tb
+    
   LEFT JOIN
-    `test-dataform-395505.source.customer` AS customer_tb
+    ${ref(`customer`)}  AS customer_tb
   ON customer_tb.customer_id = receipt_tb.customer_id
+
   WHERE gender IS NOT NULL
 )
 
