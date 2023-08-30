@@ -3,6 +3,7 @@ config {
         database: "test-dataform-395505",
         schema: "mart", 
         name: "s004",
+        tags: ["mart"],
         dependencies: [ "receipt", "customer" ] 
         }
 --44問目

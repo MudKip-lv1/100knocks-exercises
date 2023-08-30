@@ -4,7 +4,8 @@ config {
         type: "table",
         database: "test-dataform-395505",
         schema: "mart",
-        name: "s002"
+        name: "s002",
+        tags: ["mart"]
 }
 
 SELECT

@@ -4,13 +4,15 @@ config {
         type: "table",
         database: "test-dataform-395505",
         schema: "mart",
-        name: "s001"
+        name: "s001",
+        tags: ["mart"],
         }
 
 SELECT
     *,
     CURRENT_TIMESTAMP AS mart_s001_timestamp
 FROM
-    ${ref("store_sales_data")}
-
-    ${ref("customer_purchase_amount")}
+    ${ref("store_sales_data")} AS sd
+LEFT JOIN
+    ${ref("customer_purchase_amount")} As ca
+    ON sd.store_cd = ca.store_cd
