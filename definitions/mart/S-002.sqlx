@@ -5,11 +5,13 @@ config {
         database: "test-dataform-395505",
         schema: "mart",
         name: "s002"
-        }
+}
 
-select sales_ymd,
+SELECT
+        sales_ymd,
         customer_id,
         product_cd,
         amount,
         CURRENT_TIMESTAMP AS mart_s002_timestamp
- from `test-dataform-395505.source.receipt`
+FROM
+        ${ref("receipt")}

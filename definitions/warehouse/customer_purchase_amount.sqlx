@@ -9,15 +9,19 @@ config {
 
 WITH customer_amount AS (
     SELECT 
-        customer_id, SUM(amount) AS sum_amount
+        customer_id,
+        store_cd,
+        SUM(amount) AS sum_amount
     FROM
         ${ref(`receipt`)}
     GROUP BY
-        customer_id
+        customer_id,
+        store_cd
 )
 
 SELECT
     c.customer_id,
+    store_cd,
     COALESCE(a.sum_amount,0) AS purchase_amount
 FROM
     ${ref(`customer`)} AS c

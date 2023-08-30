@@ -1,18 +1,4 @@
 -- S-001: レシート明細テーブル（receipt）から全項目の先頭10件を表示し、どのようなデータを保有しているか目視で確認せよ。
--- config {
---     type: "view",
---     description: "test_1",
--- }
-
--- select * from  limit 10
-
--- config { 
---   type: "table",
---   name: "receipt_list",
---   description: "レシートリスト"
--- }
-
-
 
 config {
         type: "table",
@@ -21,8 +7,10 @@ config {
         name: "s001"
         }
 
--- SELECT * FROM ${ref("test-dataform-395505.source.receipt")}
 SELECT
     *,
-    CURRENT_TIMESTAMP AS mart_s002_timestamp
- FROM `test-dataform-395505.source.receipt`
+    CURRENT_TIMESTAMP AS mart_s001_timestamp
+FROM
+    ${ref("store_sales_data")}
+
+    ${ref("customer_purchase_amount")}
