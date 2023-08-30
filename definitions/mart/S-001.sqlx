@@ -7,9 +7,11 @@ config {
         name: "s001",
         tags: ["mart"],
         }
-
+ 
 SELECT
-    *,
+    sd.*,
+    customer_id,
+    purchase_amount,
     CURRENT_TIMESTAMP AS mart_s001_timestamp
 FROM
     ${ref("store_sales_data")} AS sd
