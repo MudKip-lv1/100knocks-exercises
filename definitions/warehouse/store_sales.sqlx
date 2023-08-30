@@ -1,0 +1,30 @@
+config {
+        type: "table",
+        database: "test-dataform-395505",
+        schema: "warehouse", 
+        name: "store_sales_data",
+        dependencies: [ "receipt", "store" ] 
+        }
+
+WITH
+store_amount_tb AS (
+        SELECT 
+        COUNT(customer_id) AS costomer_num,
+        SUM(amount) AS store_amount,
+        store_cd
+    FROM
+        ${ref(`receipt`)}
+    GROUP BY
+        store_cd
+)
+
+SELECT
+store.store_cd,
+store_name,
+store_amount,
+costomer_num
+FROM
+    ${ref(`store`)} as store
+LEFT JOIN
+    store_amount_tb
+    ON store.store_cd = store_amount_tb.store_cd
