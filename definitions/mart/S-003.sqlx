@@ -7,10 +7,11 @@ config {
   name: "s003", // ビューまたはテーブル名
 }
 
-SELECT sales_ymd AS sales_date,
-        customer_id,
-        product_cd,
-        amount,
-        CURRENT_TIMESTAMP AS mart_s003_timestamp
-FROM `new-100-knocks.100knocks.receipt`
-LIMIT 10
+SELECT
+  sales_ymd AS sales_date,
+  customer_id,
+  product_cd,
+  amount,
+  CURRENT_TIMESTAMP AS mart_s003_timestamp
+FROM
+  ${ref("receipt")}
