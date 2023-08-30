@@ -9,6 +9,7 @@ config {
         database: "test-dataform-395505",
         schema: "mart", 
         name: "s006",
+        tags: ["mart"]
         }
 
 WITH

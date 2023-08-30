@@ -3,6 +3,7 @@ config {
         database: "test-dataform-395505",
         schema: "warehouse", 
         name: "store_sales_data",
+        tags: ["warehouse"],
         dependencies: [ "receipt", "store" ] 
         }
 

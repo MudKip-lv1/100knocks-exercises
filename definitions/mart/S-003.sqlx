@@ -4,7 +4,8 @@ config {
   type: "table", // マテリアライズの種類を指定（viewまたはtable）
   database: "test-dataform-395505", // プロジェクト名
   schema: "mart", // データセット名
-  name: "s003", // ビューまたはテーブル名
+  name: "s003",
+  tags: ["mart"], // ビューまたはテーブル名
 }
 
 SELECT
