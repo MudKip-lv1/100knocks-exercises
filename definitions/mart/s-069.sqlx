@@ -5,39 +5,45 @@
 --結果は10件表示させればよい。
 
 config {
-        type: "table",
-        database: "test-dataform-395505",
-        schema: "mart", 
-        name: "s006",
-        tags: ["mart"]
-        }
+  type: "incremental"
+}
 
-WITH
-customer_amount_sum AS (
-SELECT 
-  customer_id,
-  CAST(SUM(amount) AS numeric) AS sum_amount
-FROM
-  ${ref(`receipt`)}
-GROUP BY customer_id
-),
+pre_operations {
 
-customer_sum_07 AS (
-SELECT
-  receipt.customer_id,
-  SUM(receipt.amount) AS sum_07_amount
-FROM
-  ${ref(`receipt`)} as receipt
-INNER JOIN ${ref(`product`)} as product
-ON product.product_cd = product.product_cd AND category_major_cd = 7
-GROUP BY receipt.customer_id
-)
+  CREATE TEMP TABLE new_data AS
 
-SELECT
-  sum_cus.*,
-  cus_07.sum_07_amount,
-  sum_07_amount / sum_amount AS sales_rate_07
- FROM customer_amount_sum AS sum_cus
- INNER JOIN customer_sum_07 AS cus_07
- ON sum_cus.customer_id = cus_07.customer_id
- LIMIT 10
+  WITH
+    customer_amount_sum AS (
+      SELECT 
+        customer_id,
+        CAST(SUM(amount) AS numeric) AS sum_amount
+      FROM
+        ${ref(`receipt`)}
+      GROUP BY customer_id
+    ),
+    
+    customer_sum_07 AS (
+      SELECT
+        receipt.customer_id,
+        SUM(receipt.amount) AS sum_07_amount
+      FROM 
+        ${ref(`receipt`)} as receipt
+      INNER JOIN ${ref(`product`)} as product
+        ON product.product_cd = product.product_cd AND category_major_cd = 7
+      GROUP BY receipt.customer_id
+    )
+  
+  SELECT
+    sum_cus.*,
+    cus_07.sum_07_amount,
+    sum_07_amount / sum_amount AS sales_rate_07,
+    CURRENT_TIMESTAMP() AS mart_s069_timestamp
+   FROM customer_amount_sum AS sum_cus
+   INNER JOIN customer_sum_07 AS cus_07
+     ON sum_cus.customer_id = cus_07.customer_id
+   LIMIT 10
+
+}
+
+INSERT INTO `project.dataset.existing_table`
+SELECT * FROM new_data
